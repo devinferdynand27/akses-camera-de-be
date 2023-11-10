@@ -5,15 +5,16 @@
 </head>
 <body>
     <h1>Mengakses Kamera</h1>
-    <button id="cameraFront">Kamera Depan</button>
-    <button id="cameraBack">Kamera Belakang</button>
+    <button id="toggleCamera">Toggle Kamera</button>
     <video id="videoElement" autoplay></video>
 
     <script>
         const videoElement = document.getElementById("videoElement");
+        let isFrontCamera = true;
 
         // Fungsi untuk mengakses kamera dengan mengganti kamera
-        function accessCamera(facingMode) {
+        function toggleCamera() {
+            const facingMode = isFrontCamera ? "environment" : "user";
             const constraints = {
                 video: { facingMode: facingMode }
             };
@@ -21,21 +22,15 @@
             navigator.mediaDevices.getUserMedia(constraints)
                 .then(function (stream) {
                     videoElement.srcObject = stream;
+                    isFrontCamera = !isFrontCamera; // Toggle status kamera
                 })
                 .catch(function (error) {
                     console.error("Gagal mengakses kamera:", error);
                 });
         }
 
-        // Mengakses kamera depan ketika tombol "Kamera Depan" ditekan
-        document.getElementById("cameraFront").addEventListener("click", function () {
-            accessCamera("user");
-        });
-
-        // Mengakses kamera belakang ketika tombol "Kamera Belakang" ditekan
-        document.getElementById("cameraBack").addEventListener("click", function () {
-            accessCamera("environment");
-        });
+        // Mengakses kamera ketika tombol "Toggle Kamera" ditekan
+        document.getElementById("toggleCamera").addEventListener("click", toggleCamera);
     </script>
 </body>
 </html>
