@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Mengakses Kamera</h1>
-    <button id="cameraFront">Buka Kamera</button>
+    <button  onclick="bukacamera()">Buka Kamera</button>
     <button id="cameraFront">Kamera Depan</button>
     <button id="cameraBack">Kamera Belakang</button>
     <button id="takeScreenshot">Screenshot</button>
@@ -16,6 +16,10 @@
         const videoElement = document.getElementById("videoElement");
         const takeScreenshotButton = document.getElementById("takeScreenshot");
         const screenshotImage = document.getElementById("screenshotImage");
+
+        function bukacamera(){
+            accessCamera("user");
+        }
 
         function accessCamera(facingMode) {
             const constraints = {
