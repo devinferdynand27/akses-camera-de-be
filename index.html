@@ -5,21 +5,24 @@
 </head>
 <body>
     <h1>Mengakses Kamera</h1>
+    <button id="cameraFront">Buka Kamera</button>
     <button id="cameraFront">Kamera Depan</button>
     <button id="cameraBack">Kamera Belakang</button>
-    <video id="videoElement" autoplay style=" transform: scaleX(-1); width: 90%; height: 100%;"></video>
+    <button id="takeScreenshot">Screenshot</button>
+    <video id="videoElement" autoplay style="transform: scaleX(-1); width: 90%; height: 100%;"></video>
+    <img id="screenshotImage" style="display: none;">
 
     <script>
         const videoElement = document.getElementById("videoElement");
+        const takeScreenshotButton = document.getElementById("takeScreenshot");
+        const screenshotImage = document.getElementById("screenshotImage");
 
-        // Fungsi untuk mengakses kamera dengan mengganti kamera
         function accessCamera(facingMode) {
             const constraints = {
                 video: { facingMode: facingMode }
             };
-
-            // Menghentikan kamera yang sedang berjalan
             const stream = videoElement.srcObject;
+
             if (stream) {
                 const tracks = stream.getTracks();
                 tracks.forEach(track => track.stop());
@@ -34,12 +37,31 @@
                 });
         }
 
-        // Mengakses kamera depan ketika tombol "Kamera Depan" ditekan
+        takeScreenshotButton.addEventListener("click", function () {
+            takeScreenshot();
+        });
+
+        function takeScreenshot() {
+            const canvas = document.createElement("canvas");
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            const ctx = canvas.getContext("2d");
+
+            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            // Mengambil gambar dalam format base64
+            const screenshotBase64 = canvas.toDataURL("image/png");
+
+            // Menampilkan gambar dengan elemen img
+            screenshotImage.src = screenshotBase64;
+            screenshotImage.style.display = "block"; // Menampilkan elemen img
+
+            // Anda juga dapat menyimpan gambar ini atau melakukan tindakan lain sesuai kebutuhan.
+        }
+
         document.getElementById("cameraFront").addEventListener("click", function () {
             accessCamera("user");
         });
-
-        // Mengakses kamera belakang ketika tombol "Kamera Belakang" ditekan
         document.getElementById("cameraBack").addEventListener("click", function () {
             accessCamera("environment");
         });
