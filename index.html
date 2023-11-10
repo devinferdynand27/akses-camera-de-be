@@ -5,17 +5,15 @@
 </head>
 <body>
     <h1>Mengakses Kamera</h1>
-    <button  onclick="cameraFront()">Kamera Depan</button>
-    <button onclick="cameraBack()">Kamera Belakang</button>
+    <button  onclick="kameradepan()">Kamera Depan</button>
+    <button onclick="kamerabelakang()">Kamera Belakang</button>
     <video id="videoElement" autoplay></video>
 
     <script>
         const videoElement = document.getElementById("videoElement");
-        let isFrontCamera = null;
+        let isFrontCamera = true;
 
- 
-        function accessCamera() {
-            const facingMode = isFrontCamera ? "environment" : "user";
+        function accessCamera(facingMode) {
             const constraints = {
                 video: { facingMode: facingMode }
             };
@@ -29,16 +27,14 @@
                 });
         }
 
-        function cameraFront(){
+        function kameradepan(){
             accessCamera("user");
-            console.log('kamera depan')
-             isFrontCamera = false;
-
+            isFrontCamera = true;
         }
-        function cameraBack(){
+
+        function kamerabelakang(){
             accessCamera("environment");
-             isFrontCamera = true;
-            console.log('kamera belakang')
+            isFrontCamera = false;
         }
     </script>
 </body>
