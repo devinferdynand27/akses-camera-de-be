@@ -11,9 +11,11 @@
 
     <script>
         const videoElement = document.getElementById("videoElement");
-        let isFrontCamera = true;
+        let isFrontCamera ;
 
-        function accessCamera(facingMode) {
+ 
+        function accessCamera() {
+            const facingMode = isFrontCamera ? "environment" : "user";
             const constraints = {
                 video: { facingMode: facingMode }
             };
@@ -29,12 +31,12 @@
 
         function kameradepan(){
             accessCamera("user");
-            isFrontCamera = true;
-        }
+             isFrontCamera = false;
 
+        }
         function kamerabelakang(){
             accessCamera("environment");
-            isFrontCamera = false;
+             isFrontCamera = true;
         }
     </script>
 </body>
