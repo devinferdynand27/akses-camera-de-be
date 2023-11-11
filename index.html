@@ -90,9 +90,7 @@
 
     <div class="bungkus-utama" id="cameravidio" style="display: none; ">
         <div class="bungkus-tengah">
-             <div style="background: black;">
-                <video id="videoElement"  autoplay style="object-fit: cover;transform: scaleX(-1);  height:90%; width: 100%"></video>
-             </div>
+            <video id="videoElement"  autoplay style="object-fit: cover;transform: scaleX(-1);  height:90%; width: 100%"></video>
             <img id="screenshotImage" style="display: none;">
         </div>
     </div>
@@ -123,4 +121,13 @@
                     console.error("Gagal mengakses kamera:", error);
                 });
         }
+        function disableScrolling(){
+    var x=window.scrollX;
+    var y=window.scrollY;
+    window.onscroll=function(){window.scrollTo(x, y);};
+}
+
+function enableScrolling(){
+    window.onscroll=function(){};
+}
 </script>
